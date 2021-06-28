@@ -10,15 +10,16 @@
     <LinearLayout
         android:id="@+id/Row0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/Col0_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -31,21 +32,21 @@
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col0_1"
+            android:id="@+id/Col0_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col0_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -58,21 +59,21 @@ android:id="@+id/Col0_1"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col0_3"
+            android:id="@+id/Col0_3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col0_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -86,21 +87,21 @@ android:id="@+id/Col0_3"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col0_5"
+            android:id="@+id/Col0_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col0_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -113,28 +114,29 @@ android:id="@+id/Col0_5"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col0_7"
+            android:id="@+id/Col0_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/Row1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
-android:id="@+id/Col1_0"
+            android:id="@+id/Col1_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -144,8 +146,8 @@ android:id="@+id/Col1_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -158,12 +160,12 @@ android:id="@+id/Col1_0"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col1_2"
+            android:id="@+id/Col1_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -173,8 +175,8 @@ android:id="@+id/Col1_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -187,21 +189,21 @@ android:id="@+id/Col1_2"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col1_4"
+            android:id="@+id/Col1_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col1_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -214,21 +216,21 @@ android:id="@+id/Col1_4"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col1_6"
+            android:id="@+id/Col1_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col1_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -244,15 +246,16 @@ android:id="@+id/Col1_6"
     <LinearLayout
         android:id="@+id/Row2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/Col2_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -265,21 +268,21 @@ android:id="@+id/Col1_6"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col2_1"
+            android:id="@+id/Col2_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col2_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -292,21 +295,21 @@ android:id="@+id/Col2_1"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col2_3"
+            android:id="@+id/Col2_3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col2_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -319,12 +322,12 @@ android:id="@+id/Col2_3"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col2_5"
+            android:id="@+id/Col2_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -334,8 +337,8 @@ android:id="@+id/Col2_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -348,12 +351,12 @@ android:id="@+id/Col2_5"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col2_7"
+            android:id="@+id/Col2_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -363,15 +366,16 @@ android:id="@+id/Col2_7"
     <LinearLayout
         android:id="@+id/Row3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
-android:id="@+id/Col3_0"
+            android:id="@+id/Col3_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -381,17 +385,17 @@ android:id="@+id/Col3_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
-android:id="@+id/Col3_2"
+            android:id="@+id/Col3_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp" />
 
         <LinearLayout
@@ -399,19 +403,19 @@ android:id="@+id/Col3_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col3_4"
+            android:id="@+id/Col3_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -421,28 +425,28 @@ android:id="@+id/Col3_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col3_6"
+            android:id="@+id/Col3_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col3_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -451,24 +455,25 @@ android:id="@+id/Col3_6"
     <LinearLayout
         android:id="@+id/Row4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/Col4_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
-android:id="@+id/Col4_1"
+            android:id="@+id/Col4_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -478,17 +483,17 @@ android:id="@+id/Col4_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
-android:id="@+id/Col4_3"
+            android:id="@+id/Col4_3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -498,19 +503,19 @@ android:id="@+id/Col4_3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col4_5"
+            android:id="@+id/Col4_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
@@ -520,44 +525,45 @@ android:id="@+id/Col4_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col4_7"
+            android:id="@+id/Col4_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/Row5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
-android:id="@+id/Col5_0"
+            android:id="@+id/Col5_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col5_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -571,12 +577,12 @@ android:id="@+id/Col5_0"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col5_2"
+            android:id="@+id/Col5_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp" />
 
         <LinearLayout
@@ -584,8 +590,8 @@ android:id="@+id/Col5_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -598,21 +604,21 @@ android:id="@+id/Col5_2"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col5_4"
+            android:id="@+id/Col5_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col5_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -625,21 +631,21 @@ android:id="@+id/Col5_4"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col5_6"
+            android:id="@+id/Col5_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col5_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -655,15 +661,16 @@ android:id="@+id/Col5_6"
     <LinearLayout
         android:id="@+id/Row6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/Col6_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -676,21 +683,21 @@ android:id="@+id/Col5_6"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col6_1"
+            android:id="@+id/Col6_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col6_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -701,21 +708,21 @@ android:id="@+id/Col6_1"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col6_3"
+            android:id="@+id/Col6_3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col6_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -728,21 +735,21 @@ android:id="@+id/Col6_3"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col6_5"
+            android:id="@+id/Col6_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col6_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -755,37 +762,38 @@ android:id="@+id/Col6_5"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col6_7"
+            android:id="@+id/Col6_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/Row7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/Col7_0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col7_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -799,12 +807,12 @@ android:id="@+id/Col6_7"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col7_2"
+            android:id="@+id/Col7_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp" />
 
         <LinearLayout
@@ -812,8 +820,8 @@ android:id="@+id/Col7_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -826,21 +834,21 @@ android:id="@+id/Col7_2"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col7_4"
+            android:id="@+id/Col7_4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col7_5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -853,21 +861,21 @@ android:id="@+id/Col7_4"
         </LinearLayout>
 
         <LinearLayout
-android:id="@+id/Col7_6"
+            android:id="@+id/Col7_6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
-            android:padding="5dp"/>
+            android:orientation="vertical"
+            android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/Col7_7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:orientation="vertical"
             android:onClick="moveChecker"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
@@ -879,5 +887,26 @@ android:id="@+id/Col7_6"
                 tools:layout_editor_absoluteY="460dp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/turnWhiteText"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Player: White"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/turnBlackText"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Player: Black"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:visibility="gone" />
 
 </LinearLayout>
