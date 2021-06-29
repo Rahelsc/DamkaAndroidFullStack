@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
     LinearLayout prev;
     int[][] damkaMatrix;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView whiteTurnText;
     TextView blackTurnText;
     ArrayList<LinearLayout> graphicNeighbours;
+    boolean keepEating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,27 +85,65 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer[]> neighboursToEat = new ArrayList<>();
 
         LinearLayout current = (LinearLayout) view;
+        int[] colIndex = getColId(current);
+        if (prev != null && !keepEating)
+            prev.setBackgroundColor(Color.rgb(178, 94, 60));
+        if (current.getChildCount() > 0 && !keepEating) {
+            resetTurn();
+            if (whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 1) {
+                neighbours = (ArrayList) getNeighborsWhite(colIndex[0], colIndex[1]);
+                neighboursToEat = (ArrayList) getWhoWhitePlayerCanEat(colIndex[0], colIndex[1]);
+                neighboursToEat.forEach(n -> Log.d("moran", Arrays.toString(n)));
+
+                if (neighbours.size() > 0 || neighboursToEat.size() > 0)
+                    turn(current, neighbours, neighboursToEat);
+
+            } else if (!whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 2) {
+                neighbours = (ArrayList) getNeighborsBlack(colIndex[0], colIndex[1]);
+                neighboursToEat = (ArrayList) getWhoBlackPlayerCanEat(colIndex[0], colIndex[1]);
+                neighboursToEat.forEach(n -> Log.d("hezi", Arrays.toString(n)));
+
+
+                if (neighbours.size() > 0 || neighboursToEat.size() > 0)
+                    turn(current, neighbours, neighboursToEat);
+
+            }
+        }
+    }
+
+
+    public void moveAfterEat(View view) {
+        ArrayList<Integer[]> neighboursToEat = new ArrayList<>();
+
+        LinearLayout current = (LinearLayout) view;
         resetTurn();
         int[] colIndex = getColId(current);
         if (prev != null)
             prev.setBackgroundColor(Color.rgb(178, 94, 60));
         if (current.getChildCount() > 0) {
             if (whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 1) {
-                neighbours = (ArrayList) getNeighborsWhite(colIndex[0], colIndex[1]);
                 neighboursToEat = (ArrayList) getWhoWhitePlayerCanEat(colIndex[0], colIndex[1]);
-                neighboursToEat.forEach(n->Log.d("moran", Arrays.toString(n)));
+                neighboursToEat.forEach(n -> Log.d("moran", Arrays.toString(n)));
 
-                if (neighbours.size() > 0 || neighboursToEat.size()>0)
-                    turn(current, neighbours, neighboursToEat);
-
+                if (neighboursToEat.size() > 0)
+                    turn(current, new ArrayList<>(), neighboursToEat);
+                else{
+                    keepEating=false;
+                    Log.d(TAG, "moveChecker: 2");
+                    changePlayer();
+                }
             } else if (!whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 2) {
-                neighbours = (ArrayList) getNeighborsBlack(colIndex[0], colIndex[1]);
                 neighboursToEat = (ArrayList) getWhoBlackPlayerCanEat(colIndex[0], colIndex[1]);
-                neighboursToEat.forEach(n->Log.d("hezi", Arrays.toString(n)));
+                neighboursToEat.forEach(n -> Log.d("hezi", Arrays.toString(n)));
 
 
-                if (neighbours.size() > 0 || neighboursToEat.size()>0)
-                    turn(current, neighbours, neighboursToEat);
+                if ( neighboursToEat.size() > 0)
+                    turn(current, new ArrayList<>(), neighboursToEat);
+                else{
+                    keepEating = false;
+                    changePlayer();
+                    Log.d(TAG, "moveChecker: 3");
+                }
             }
         }
     }
@@ -124,9 +165,11 @@ public class MainActivity extends AppCompatActivity {
                     resetTurn();
                     int[] colIndex = getColId(prev);
                     int[] nextStepIndex = getColId(nextStep);
-                    changeTurnStatus();
+                    changePlayer();
+                    Log.d(TAG, "onClick: 1");
                     damkaMatrix[nextStepIndex[0]][nextStepIndex[1]] = damkaMatrix[colIndex[0]][colIndex[1]];
                     damkaMatrix[colIndex[0]][colIndex[1]] = 0;
+
                 }
             });
             layoutArr.add(nextStep);
@@ -149,9 +192,11 @@ public class MainActivity extends AppCompatActivity {
                     int[] colIndex = getColId(prev);
                     int[] nextStepIndex = getColId(nextStep);
                     eatChecker(colIndex[0], nextStepIndex[1], colIndex[1]);
-                    changeTurnStatus();
+//                    changePlayer();
                     damkaMatrix[nextStepIndex[0]][nextStepIndex[1]] = damkaMatrix[colIndex[0]][colIndex[1]];
                     damkaMatrix[colIndex[0]][colIndex[1]] = 0;
+                    keepEating = true;
+                    moveAfterEat(nextStep);
                 }
             });
             layoutArr.add(nextStep);
@@ -197,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
     public void resetTurn() {
         for (LinearLayout graphicNeighbour : graphicNeighbours) {
             graphicNeighbour.setBackgroundColor(Color.rgb(178, 94, 60));
+            graphicNeighbour.setOnClickListener(null);
             graphicNeighbour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -206,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void changeTurnStatus() {
+    public void changePlayer() {
         whiteTurn = !whiteTurn;
         if (whiteTurn) {
             whiteTurnText.setVisibility(View.VISIBLE);
@@ -227,54 +273,67 @@ public class MainActivity extends AppCompatActivity {
         return colIndex;
     }
 
-    public Collection<Integer[]> getWhoWhitePlayerCanEat(int row, int column){
+    public Collection<Integer[]> getWhoWhitePlayerCanEat(int row, int column) {
         Collection<Integer[]> eatList = new ArrayList<>();
+        try {
 
-        int extracted = damkaMatrix[row + 1][column - 1];
-        if (extracted == 2) {
-            try {
-                extracted = damkaMatrix[row + 2][column - 2];
-                if (extracted == 0)
-                    eatList.add(new Integer[]{row + 2, column - 2});
-            } catch (ArrayIndexOutOfBoundsException ignored) {
+            int extracted = damkaMatrix[row + 1][column - 1];
+            if (extracted == 2) {
+                try {
+                    extracted = damkaMatrix[row + 2][column - 2];
+                    if (extracted == 0)
+                        eatList.add(new Integer[]{row + 2, column - 2});
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
+        try {
 
-        extracted = damkaMatrix[row + 1][column + 1];
-        if (extracted == 2) {
-            try {
-                extracted = damkaMatrix[row + 2][column + 2];
-                if (extracted == 0)
-                    eatList.add(new Integer[]{row + 2, column + 2});
-            } catch (ArrayIndexOutOfBoundsException ignored) {
+            int extracted = damkaMatrix[row + 1][column + 1];
+            if (extracted == 2) {
+                try {
+                    extracted = damkaMatrix[row + 2][column + 2];
+                    if (extracted == 0)
+                        eatList.add(new Integer[]{row + 2, column + 2});
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException igonred) {
         }
 
         return eatList;
     }
 
-    public Collection<Integer[]> getWhoBlackPlayerCanEat(int row, int column){
+    public Collection<Integer[]> getWhoBlackPlayerCanEat(int row, int column) {
         Collection<Integer[]> eatList = new ArrayList<>();
 
-        int extracted = damkaMatrix[row - 1][column - 1];
-        if (extracted == 1) {
-            try {
-                extracted = damkaMatrix[row - 2][column - 2];
-                if (extracted == 0)
-                    eatList.add(new Integer[]{row - 2, column - 2});
-            } catch (ArrayIndexOutOfBoundsException ignored) {
+        try {
+
+            int extracted = damkaMatrix[row - 1][column - 1];
+            if (extracted == 1) {
+                try {
+                    extracted = damkaMatrix[row - 2][column - 2];
+                    if (extracted == 0)
+                        eatList.add(new Integer[]{row - 2, column - 2});
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException igonred) {
         }
 
-        extracted = damkaMatrix[row - 1][column + 1];
+        try {
 
-        if (extracted == 1) {
-            try {
-                extracted = damkaMatrix[row - 2][column + 2];
-                if (extracted == 0)
-                    eatList.add(new Integer[]{row - 2, column + 2});
-            } catch (ArrayIndexOutOfBoundsException ignored) {
+            int extracted = damkaMatrix[row - 1][column + 1];
+            if (extracted == 1) {
+                try {
+                    extracted = damkaMatrix[row - 2][column + 2];
+                    if (extracted == 0)
+                        eatList.add(new Integer[]{row - 2, column + 2});
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return eatList;
@@ -308,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         int typeOfChecker = whiteTurn ? 1 : 2;
         ArrayList<Integer[]> list = new ArrayList<>();
         int extracted = -1;
-//        boolean keepEating = true;
+
         try {
             extracted = damkaMatrix[row + 1][column - 1];
             if (extracted == 0) {
@@ -317,21 +376,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
-//        while (keepEating) {
-//            try {
-//                int potentialEnemy = damkaMatrix[row + 1][column - 1];
-//                extracted = damkaMatrix[row + 2][column - 2];
-//                if (extracted == 0 && potentialEnemy!=typeOfChecker) {
-//                    list.add(new Integer[]{row + 2, column - 2});
-//                    row+=2;
-//                    column-=2;
-//                }else
-//                    keepEating=false;
-//
-//            } catch (ArrayIndexOutOfBoundsException ignored) {
-//                Log.d("hezi","maaa kore");
-//            }
-//        }
 
         try {
             extracted = damkaMatrix[row + 1][column + 1];
