@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void turn(LinearLayout current, ArrayList<Integer[]> neighbours) {
+    public void turn(LinearLayout current, ArrayList<Integer[]> neighbours, ArrayList<Integer[]> neighboursToEat) {
         current.setBackgroundColor(Color.rgb(255, 0, 0));
-        graphicNeighbours = getGraphicNeighbours(neighbours);
+        graphicNeighbours = getGraphicNeighbours(neighbours, neighboursToEat);
         prev = current;
 
 
@@ -78,35 +79,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveChecker(View view) {
         ArrayList<Integer[]> neighbours = new ArrayList<>();
+        ArrayList<Integer[]> neighboursToEat = new ArrayList<>();
+
         LinearLayout current = (LinearLayout) view;
         resetTurn();
         int[] colIndex = getColId(current);
         if (prev != null)
             prev.setBackgroundColor(Color.rgb(178, 94, 60));
         if (current.getChildCount() > 0) {
-//            if (whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 2)
-//                return;
-//            if (!whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 1)
-//                return;
-
             if (whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 1) {
                 neighbours = (ArrayList) getNeighborsWhite(colIndex[0], colIndex[1]);
-                if (neighbours.size() > 0)
-                    turn(current, neighbours);
+                neighboursToEat = (ArrayList) getWhoWhitePlayerCanEat(colIndex[0], colIndex[1]);
+                neighboursToEat.forEach(n->Log.d("moran", Arrays.toString(n)));
+
+                if (neighbours.size() > 0 || neighboursToEat.size()>0)
+                    turn(current, neighbours, neighboursToEat);
 
             } else if (!whiteTurn && damkaMatrix[colIndex[0]][colIndex[1]] == 2) {
                 neighbours = (ArrayList) getNeighborsBlack(colIndex[0], colIndex[1]);
-                if (neighbours.size() > 0)
-                    turn(current, neighbours);
+                neighboursToEat = (ArrayList) getWhoBlackPlayerCanEat(colIndex[0], colIndex[1]);
+                neighboursToEat.forEach(n->Log.d("hezi", Arrays.toString(n)));
+
+
+                if (neighbours.size() > 0 || neighboursToEat.size()>0)
+                    turn(current, neighbours, neighboursToEat);
             }
-
-
         }
-
     }
 
-    public ArrayList<LinearLayout> getGraphicNeighbours(ArrayList<Integer[]> neighbours) {
+    public ArrayList<LinearLayout> getGraphicNeighbours(ArrayList<Integer[]> neighbours, ArrayList<Integer[]> neighboursToEat) {
         ArrayList<LinearLayout> layoutArr = new ArrayList<>();
+        Log.d("shai", Integer.toString(neighboursToEat.size()));
         for (Integer[] neighbour : neighbours) {
             int id = getResources().getIdentifier("Col" + neighbour[0] + "_" + neighbour[1], "id", getPackageName());
             LinearLayout nextStep = findViewById(id);
@@ -114,6 +117,30 @@ public class MainActivity extends AppCompatActivity {
             nextStep.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    ImageView innerTemp = (ImageView) prev.getChildAt(0);
+                    prev.removeView(innerTemp);
+                    nextStep.addView(innerTemp);
+                    prev.setBackgroundColor(Color.rgb(178, 94, 60));
+                    resetTurn();
+                    int[] colIndex = getColId(prev);
+                    int[] nextStepIndex = getColId(nextStep);
+                    changeTurnStatus();
+                    damkaMatrix[nextStepIndex[0]][nextStepIndex[1]] = damkaMatrix[colIndex[0]][colIndex[1]];
+                    damkaMatrix[colIndex[0]][colIndex[1]] = 0;
+                }
+            });
+            layoutArr.add(nextStep);
+        }
+
+        for (Integer[] neighbour : neighboursToEat) {
+            Log.d("yoad", "trial");
+            int id = getResources().getIdentifier("Col" + neighbour[0] + "_" + neighbour[1], "id", getPackageName());
+            LinearLayout nextStep = findViewById(id);
+            nextStep.setBackgroundResource(R.drawable.border);
+            nextStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("rachel", "trial1");
                     ImageView innerTemp = (ImageView) prev.getChildAt(0);
                     prev.removeView(innerTemp);
                     nextStep.addView(innerTemp);
@@ -200,6 +227,59 @@ public class MainActivity extends AppCompatActivity {
         return colIndex;
     }
 
+    public Collection<Integer[]> getWhoWhitePlayerCanEat(int row, int column){
+        Collection<Integer[]> eatList = new ArrayList<>();
+
+        int extracted = damkaMatrix[row + 1][column - 1];
+        if (extracted == 2) {
+            try {
+                extracted = damkaMatrix[row + 2][column - 2];
+                if (extracted == 0)
+                    eatList.add(new Integer[]{row + 2, column - 2});
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
+        }
+
+        extracted = damkaMatrix[row + 1][column + 1];
+        if (extracted == 2) {
+            try {
+                extracted = damkaMatrix[row + 2][column + 2];
+                if (extracted == 0)
+                    eatList.add(new Integer[]{row + 2, column + 2});
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
+        }
+
+        return eatList;
+    }
+
+    public Collection<Integer[]> getWhoBlackPlayerCanEat(int row, int column){
+        Collection<Integer[]> eatList = new ArrayList<>();
+
+        int extracted = damkaMatrix[row - 1][column - 1];
+        if (extracted == 1) {
+            try {
+                extracted = damkaMatrix[row - 2][column - 2];
+                if (extracted == 0)
+                    eatList.add(new Integer[]{row - 2, column - 2});
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
+        }
+
+        extracted = damkaMatrix[row - 1][column + 1];
+
+        if (extracted == 1) {
+            try {
+                extracted = damkaMatrix[row - 2][column + 2];
+                if (extracted == 0)
+                    eatList.add(new Integer[]{row - 2, column + 2});
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
+        }
+
+        return eatList;
+    }
+
     public Collection<Integer[]> getNeighborsBlack(int row, int column) {
         int typeOfChecker = whiteTurn ? 1 : 2;
         Collection<Integer[]> list = new ArrayList<>();
@@ -208,79 +288,59 @@ public class MainActivity extends AppCompatActivity {
             extracted = damkaMatrix[row - 1][column - 1];
             if (extracted == 0)
                 list.add(new Integer[]{row - 1, column - 1});
-            else if (extracted != typeOfChecker)
-                try {
-                    extracted = damkaMatrix[row - 2][column - 2];
-                    if (extracted == 0)
-                        list.add(new Integer[]{row - 2, column - 2});
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         try {
             extracted = damkaMatrix[row - 1][column + 1];
             if (extracted == 0)
                 list.add(new Integer[]{row - 1, column + 1});
-            else if (extracted != typeOfChecker)
-                try {
-                    extracted = damkaMatrix[row - 2][column + 2];
-                    if (extracted == 0)
-                        list.add(new Integer[]{row - 2, column + 2});
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return list;
     }
 
-
     public Collection<Integer[]> getNeighborsWhite(int row, int column) {
         int typeOfChecker = whiteTurn ? 1 : 2;
         ArrayList<Integer[]> list = new ArrayList<>();
         int extracted = -1;
-        boolean keepEating = true;
-
-
+//        boolean keepEating = true;
         try {
             extracted = damkaMatrix[row + 1][column - 1];
             if (extracted == 0) {
                 list.add(new Integer[]{row + 1, column - 1});
-            } else if (extracted != typeOfChecker)
-                while (keepEating) {
-                    try {
-                        int potentialEnemy = damkaMatrix[row + 1][column - 1];
-                        extracted = damkaMatrix[row + 2][column - 2];
-                        if (extracted == 0 && potentialEnemy!=typeOfChecker) {
-                            list.add(new Integer[]{row + 2, column - 2});
-                            row+=2;
-                            column-=2;
-                        }else
-                            keepEating=false;
-
-                    } catch (ArrayIndexOutOfBoundsException ignored) {
-                        Log.d("hezi","maaa kore");
-                    }
-                }
+            }
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
+//        while (keepEating) {
+//            try {
+//                int potentialEnemy = damkaMatrix[row + 1][column - 1];
+//                extracted = damkaMatrix[row + 2][column - 2];
+//                if (extracted == 0 && potentialEnemy!=typeOfChecker) {
+//                    list.add(new Integer[]{row + 2, column - 2});
+//                    row+=2;
+//                    column-=2;
+//                }else
+//                    keepEating=false;
+//
+//            } catch (ArrayIndexOutOfBoundsException ignored) {
+//                Log.d("hezi","maaa kore");
+//            }
+//        }
 
         try {
             extracted = damkaMatrix[row + 1][column + 1];
             if (extracted == 0)
                 list.add(new Integer[]{row + 1, column + 1});
-            else if (extracted != typeOfChecker)
-                try {
-                    extracted = damkaMatrix[row + 2][column + 2];
-                    if (extracted == 0)
-                        list.add(new Integer[]{row + 2, column + 2});
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
-
-
         return list;
     }
 }
