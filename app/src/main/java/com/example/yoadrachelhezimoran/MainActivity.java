@@ -111,6 +111,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+     // removes all views from a given view and adds instead a view of the queen
+    public void turnToKing(View view){
+        LinearLayout kingHere = (LinearLayout) view;
+        kingHere.removeAllViews();
+        // initialising new layout
+        ImageView imageView = new ImageView(MainActivity.this);
+
+        // setting the image in the layout
+        if (whiteTurn)
+            imageView.setImageResource(R.mipmap.white_queen_foreground);
+        else
+            imageView.setImageResource(R.mipmap.black_queen_foreground);
+
+        kingHere.addView(imageView);
+    }
+
 
     public void moveAfterEat(View view) {
         ArrayList<Integer[]> neighboursToEat = new ArrayList<>();
@@ -192,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     int[] colIndex = getColId(prev);
                     int[] nextStepIndex = getColId(nextStep);
                     eatChecker(colIndex[0], nextStepIndex[1], colIndex[1]);
-//                    changePlayer();
+                    damkaMatrix[nextStepIndex[0]][nextStepIndex[1]] = damkaMatrix[colIndex[0]][colIndex[1]];
                     damkaMatrix[nextStepIndex[0]][nextStepIndex[1]] = damkaMatrix[colIndex[0]][colIndex[1]];
                     damkaMatrix[colIndex[0]][colIndex[1]] = 0;
                     keepEating = true;
