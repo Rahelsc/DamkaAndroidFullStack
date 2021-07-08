@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/VisualCheckerBoard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -18,7 +19,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -36,7 +36,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -45,7 +44,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -63,7 +61,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -72,7 +69,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -91,7 +87,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -100,7 +95,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -118,7 +112,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -135,7 +128,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -146,7 +138,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -164,7 +155,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -175,7 +165,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -193,7 +182,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -202,7 +190,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -220,7 +207,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -229,7 +215,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -254,7 +239,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -272,7 +256,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -281,7 +264,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -299,7 +281,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -308,7 +289,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -326,7 +306,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -337,7 +316,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -355,7 +333,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -374,7 +351,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -385,7 +361,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -394,7 +369,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -403,7 +377,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -414,7 +387,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -425,7 +397,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -436,7 +407,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -445,7 +415,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -463,7 +432,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -472,7 +440,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -483,7 +450,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -492,7 +458,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -503,7 +468,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -514,7 +478,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -525,7 +488,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -536,7 +498,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -553,7 +514,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -562,7 +522,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -581,7 +540,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -590,7 +548,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -608,7 +565,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -617,7 +573,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -635,7 +590,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -644,7 +598,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -669,7 +622,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -687,7 +639,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -696,7 +647,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -712,7 +662,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -721,7 +670,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -739,7 +687,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -748,7 +695,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -766,7 +712,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -783,7 +728,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -792,7 +736,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -811,7 +754,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -820,7 +762,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -838,7 +779,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -847,7 +787,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -865,7 +804,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/whiteBrown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp" />
 
@@ -874,7 +812,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/Brown"
-            android:onClick="moveChecker"
             android:orientation="vertical"
             android:padding="5dp">
 
