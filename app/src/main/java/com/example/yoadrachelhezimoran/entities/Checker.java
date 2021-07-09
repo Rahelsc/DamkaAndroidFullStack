@@ -59,6 +59,17 @@ public abstract class Checker {
         return "(" + xPlaceOnBoard +", " + yPlaceOnBoard + "), " + "king? " + isKing;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Checker checker = (Checker) o;
+        return xPlaceOnBoard == checker.xPlaceOnBoard &&
+                yPlaceOnBoard == checker.yPlaceOnBoard &&
+                isKing == checker.isKing;
+    }
+
+
     public abstract ImageView getCheckerImageView();
     public abstract void setCheckerImageView(ImageView imageView);
 }

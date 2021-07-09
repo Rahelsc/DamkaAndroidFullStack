@@ -25,6 +25,10 @@ public class CheckerBoard {
     private static boolean gameOver = false;
     private static Context context;
 
+    public static Context getContext() {
+        return context;
+    }
+
     public static void setContext(Context context) {
         CheckerBoard.context = context;
     }
@@ -33,13 +37,15 @@ public class CheckerBoard {
         return gameOver;
     }
 
-    private static void setGameOver(boolean gameOver) {
+    public static void setGameOver(boolean gameOver) {
         CheckerBoard.gameOver = gameOver;
     }
 
     public static ArrayList<Index> setPositionsCheckerCanMoveTo() {
-        findNeighboursOfChecker();
-        findNeighboursCheckerCanEat();
+        if (current.getChecker() != null) {
+            findNeighboursOfChecker();
+            findNeighboursCheckerCanEat();
+        }
         return positionsCheckerCanMoveTo;
     }
 
@@ -66,7 +72,6 @@ public class CheckerBoard {
     public static CheckerBoard getInstance(){
         if (checkerboard == null)
             checkerboard = new CheckerBoard();
-
         return checkerboard;
     }
 
@@ -115,9 +120,11 @@ public class CheckerBoard {
             setAndGetActiveSquare(whiteSquare);
             if (positionsCheckerCanMoveTo.size()>0){
                 current = null;
+                clearPreviousPositions();
                 return true;
             }
         }
+        clearPreviousPositions();
         return false;
     }
 
@@ -126,9 +133,11 @@ public class CheckerBoard {
             setAndGetActiveSquare(blackSquare);
             if (positionsCheckerCanMoveTo.size()>0) {
                 current = null;
+                clearPreviousPositions();
                 return true;
             }
         }
+        clearPreviousPositions();
         return false;
     }
 
@@ -272,24 +281,59 @@ public class CheckerBoard {
         target.setChecker(tempChecker);
         addToCorrectCheckersArr(target);
         kingCheckerIfNeeded(target);
-        positionsCheckerCanMoveTo.clear();
-        current = null;
-//        if (Player.isIsWhitePlayerTurn() && MainActivity.blackPlayer.hasMove() && MainActivity.blackPlayer.getNumberOfCheckersLeft()>0
-//        || !Player.isIsWhitePlayerTurn() && MainActivity.whitePlayer.hasMove() && MainActivity.whitePlayer.getNumberOfCheckersLeft()>0) {
+        target.getVisualSquare().setOnClickListener(null);
+        clearPreviousPositions();
+
+        // to keep if last move was to eat
+        boolean haventEaten = true;
+        // if difference between moves was 2 then last move we did eat
+        if (Math.abs(target.getIndex().getY() - current.getIndex().getY())==2){
+            haventEaten = false;
+        }
+
+        if (Player.isIsWhitePlayerTurn() && (!checkerboard.canBlackPlayerMove() || MainActivity.blackPlayer.getNumberOfCheckersLeft()==0)
+        || !Player.isIsWhitePlayerTurn() && (!checkerboard.canWhitePlayerMove() || MainActivity.whitePlayer.getNumberOfCheckersLeft()==0)) {
+            gameOver = true;
+        }
+
+        // clear the calls to canBlackPlayerMove && canWhitePlayerMove from results
+        clearPreviousPositions();
+
+        // checking from new position can we continue eating
+        current = target;
+        findNeighboursCheckerCanEat();
+        // if we can't eat now or we didn't eat last turn, we let the other player play
+        if (positionsCheckerCanMoveTo.size()==0 || haventEaten) {
+            current = null;
             Player.changeTurn();
             MainActivity.setOnClickOfAllCheckers();
-//        }
-//        else {
-//            gameOver = true;
-//        }
+        } else {
+            // if we can eat, we make sure all pieces on the board can't move other than our own
+            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+                whiteChecker.getVisualSquare().setOnClickListener(null);
+            }
+
+            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+                blackChecker.getVisualSquare().setOnClickListener(null);
+            }
+            clearPreviousPositions();
+
+            // we find the next target we can move to from current position
+            setAndGetActiveSquare(target);
+        }
+
+        System.out.println("black size: "+blackCheckers.size());
+        System.out.println("white size: "+whiteCheckers.size());
+
     }
 
     public static void visualMovement(Square target){
         LinearLayout visualSquare = current.getVisualSquare();
         ImageView visualChecker = (ImageView) current.getVisualSquare().getChildAt(0);
         visualSquare.removeAllViews();
-        if (visualChecker!=null)
+        if (visualChecker!=null) {
             target.getVisualSquare().addView(visualChecker);
+        }
         visuallyRemovePositionsCheckerCanMoveTo();
     }
 
@@ -319,9 +363,15 @@ public class CheckerBoard {
 
     private static void addToCorrectCheckersArr(Square target){
         if (target.getChecker() instanceof CheckerWhite){
+            target.getVisualSquare().setOnClickListener(null);
+            current.getVisualSquare().setOnClickListener(null);
+            whiteCheckers.remove(current);
             whiteCheckers.add(target);
         }
         else if (target.getChecker() instanceof CheckerBlack){
+            target.getVisualSquare().setOnClickListener(null);
+            current.getVisualSquare().setOnClickListener(null);
+            blackCheckers.remove(current);
             blackCheckers.add(target);
         }
     }
@@ -350,3 +400,8 @@ public class CheckerBoard {
         return checkers;
     }
 }
+
+/*
+* ולבדוק תיקו?
+*
+* */

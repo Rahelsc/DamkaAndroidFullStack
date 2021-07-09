@@ -2,14 +2,18 @@ package com.example.yoadrachelhezimoran;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.yoadrachelhezimoran.entities.CheckerBoard;
@@ -50,20 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
     // this is win - we need to handle tie
     public static void endOfGameAnnouncement(){
-        if (CheckerBoard.isGameOver()){
-            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
-                blackChecker.getVisualSquare().setOnClickListener(null);
-            }
-
-            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
-                whiteChecker.getVisualSquare().setOnClickListener(null);
-            }
-
-            String tempAnnouncement = currentPlayer.nameOfPlayer() + " " + winAnnouncement.getText().toString();
-            winAnnouncement.setText(tempAnnouncement);
-
+        for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+            blackChecker.getVisualSquare().setOnClickListener(null);
         }
 
+        for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+            whiteChecker.getVisualSquare().setOnClickListener(null);
+        }
+
+        String tempAnnouncement = currentPlayer.nameOfPlayer() + " " + winAnnouncement.getText().toString();
+        winAnnouncement.setText(tempAnnouncement);
+        winAnnouncement.setVisibility(View.VISIBLE);
     }
 
 
@@ -83,12 +84,23 @@ public class MainActivity extends AppCompatActivity {
 
     // add event listener to player that is active
     public static void setOnClickOfAllCheckers(){
+
+        if (CheckerBoard.isGameOver()) {
+            endOfGameAnnouncement();
+            return;
+        }
         Log.d("hezi", "setOnClickOfAllCheckers: \n" + CheckerBoard.getInstance());
+
+        for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+            whiteChecker.getVisualSquare().setOnClickListener(null);
+        }
+
+        for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+            blackChecker.getVisualSquare().setOnClickListener(null);
+        }
         changePlayer();
         if (Player.isIsWhitePlayerTurn()) {
-            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
-                blackChecker.getVisualSquare().setOnClickListener(null);
-            }
+
             for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
                 whiteChecker.getVisualSquare().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -100,9 +112,7 @@ public class MainActivity extends AppCompatActivity {
             currentPlayer = whitePlayer;
         }
         else {
-            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
-                whiteChecker.getVisualSquare().setOnClickListener(null);
-            }
+
 
             for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
                 blackChecker.getVisualSquare().setOnClickListener(new View.OnClickListener() {
@@ -129,4 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void yieldGame(View view) {
+        findViewById(R.id.askDefeat).setOnClickListener(null);
+        currentPlayer.giveUpNow();
+        currentPlayer = currentPlayer.nameOfPlayer().equals("White") ? blackPlayer : whitePlayer;
+        setOnClickOfAllCheckers();
+    }
 }

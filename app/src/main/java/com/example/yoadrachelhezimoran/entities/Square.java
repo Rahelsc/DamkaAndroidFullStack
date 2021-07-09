@@ -1,6 +1,8 @@
 package com.example.yoadrachelhezimoran.entities;
 import android.widget.LinearLayout;
 
+import java.util.Objects;
+
 public class Square{
     private Index index;
     private Checker checker;
@@ -34,6 +36,15 @@ public class Square{
 
     public void setChecker(Checker checker) {
         this.checker = checker;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return index.equals(square.getIndex()) &&
+                checker.equals(square.getChecker());
     }
 
     @Override

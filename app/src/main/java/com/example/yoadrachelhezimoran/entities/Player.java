@@ -2,24 +2,12 @@ package com.example.yoadrachelhezimoran.entities;
 
 public class Player {
     public static boolean isWhitePlayerTurn = true;
-    private boolean giveUp;
     private int wins;
-    private int movesCount;
     private typeOfPlayer type;
 
     public Player(typeOfPlayer type) {
-        this.giveUp = false;
         this.wins = 0;
-        this.movesCount = 0;
         this.type = type;
-    }
-
-    public int getMovesCount() {
-        return movesCount;
-    }
-
-    public void addMovesCount(){
-        this.movesCount++;
     }
 
     public int getWins() {
@@ -30,12 +18,8 @@ public class Player {
         this.wins++;
     }
 
-    public boolean isGiveUp() {
-        return giveUp;
-    }
-
     public void giveUpNow() {
-        this.giveUp = true;
+        CheckerBoard.setGameOver(true);
     }
 
     public static boolean isIsWhitePlayerTurn() {
