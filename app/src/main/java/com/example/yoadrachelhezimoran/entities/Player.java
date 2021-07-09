@@ -66,4 +66,14 @@ public class Player {
                 CheckerBoard.getInstance().canBlackPlayerMove() :
                 CheckerBoard.getInstance().canWhitePlayerMove();
     }
+
+    public boolean checkWin(){
+        return this.getNumberOfCheckersLeft() == 0 || !this.hasMove();
+    }
+
+    public String nameOfPlayer(){
+        if (type == typeOfPlayer.BLACK)
+            return "Black";
+        else return "White";
+    }
 }

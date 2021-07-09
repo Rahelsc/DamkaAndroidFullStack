@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.yoadrachelhezimoran.entities.CheckerBoard;
 import com.example.yoadrachelhezimoran.entities.Player;
+import com.example.yoadrachelhezimoran.entities.Square;
 import com.example.yoadrachelhezimoran.entities.typeOfPlayer;
 
 import java.util.ArrayList;
@@ -27,19 +28,47 @@ public class MainActivity extends AppCompatActivity {
     public static final Player blackPlayer = new Player(typeOfPlayer.BLACK);
     public static final Player whitePlayer = new Player(typeOfPlayer.WHITE);
     public static LinearLayout visualCheckersBoard;
-
+    public static TextView whiteTurnText;
+    public static TextView blackTurnText;
+    private static TextView winAnnouncement;
+    private static Player currentPlayer = whitePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        whiteTurnText = findViewById(R.id.turnWhiteText);
+        blackTurnText = findViewById(R.id.turnBlackText);
+        winAnnouncement = findViewById(R.id.PlayerWins);
         CheckerBoard c= CheckerBoard.getInstance();
         visualCheckersBoard = findViewById(R.id.VisualCheckerBoard);
+        CheckerBoard.setContext(MainActivity.this);
         setImages();
+        setOnClickOfAllCheckers();
 
-        
     }
 
+    // this is win - we need to handle tie
+    public static void endOfGameAnnouncement(){
+        if (CheckerBoard.isGameOver()){
+            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+                blackChecker.getVisualSquare().setOnClickListener(null);
+            }
+
+            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+                whiteChecker.getVisualSquare().setOnClickListener(null);
+            }
+
+            String tempAnnouncement = currentPlayer.nameOfPlayer() + " " + winAnnouncement.getText().toString();
+            winAnnouncement.setText(tempAnnouncement);
+
+        }
+
+    }
+
+
+
+    // fills the squares with the appropriate views
     public void setImages(){
         for (int i = 0; i < 8; i++) {
             LinearLayout row = (LinearLayout) visualCheckersBoard.getChildAt(i);
@@ -52,14 +81,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // stopped here - changing the checker works, here should change turns and plays as needed
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        ImageView imageView = new ImageView(MainActivity.this);
-        imageView.setImageResource(R.mipmap.black_queen_foreground);
-        CheckerBoard.getCheckersMatrix()[0][0].getVisualSquare().removeAllViews();
+    // add event listener to player that is active
+    public static void setOnClickOfAllCheckers(){
+        Log.d("hezi", "setOnClickOfAllCheckers: \n" + CheckerBoard.getInstance());
+        changePlayer();
+        if (Player.isIsWhitePlayerTurn()) {
+            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+                blackChecker.getVisualSquare().setOnClickListener(null);
+            }
+            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+                whiteChecker.getVisualSquare().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckerBoard.setAndGetActiveSquare(whiteChecker);
+                    }
+                });
+            }
+            currentPlayer = whitePlayer;
+        }
+        else {
+            for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
+                whiteChecker.getVisualSquare().setOnClickListener(null);
+            }
 
-        CheckerBoard.getCheckersMatrix()[0][0].getVisualSquare().addView(imageView);
-        return super.onTouchEvent(event);
+            for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
+                blackChecker.getVisualSquare().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckerBoard.setAndGetActiveSquare(blackChecker);
+                    }
+                });
+            }
+
+            currentPlayer = blackPlayer;
+        }
     }
+
+    // changes the text indicator of whose turn it is --> put in checker
+    public static void changePlayer() {
+        if (Player.isIsWhitePlayerTurn()) {
+            whiteTurnText.setVisibility(View.VISIBLE);
+            blackTurnText.setVisibility(View.GONE);
+        } else {
+            blackTurnText.setVisibility(View.VISIBLE);
+            whiteTurnText.setVisibility(View.GONE);
+        }
+    }
+
+
 }

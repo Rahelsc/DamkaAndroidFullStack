@@ -846,4 +846,15 @@
         android:textSize="30sp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/PlayerWins"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Player Wins"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        tools:visibility="gone" />
+
 </LinearLayout>

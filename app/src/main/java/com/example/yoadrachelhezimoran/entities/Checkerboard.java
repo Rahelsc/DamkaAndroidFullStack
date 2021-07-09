@@ -1,6 +1,11 @@
 package com.example.yoadrachelhezimoran.entities;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.yoadrachelhezimoran.MainActivity;
 import com.example.yoadrachelhezimoran.R;
@@ -17,8 +22,22 @@ public class CheckerBoard {
     private static ArrayList<Index> positionsCheckerCanMoveTo;
     private static ArrayList<Square> whiteCheckers = new ArrayList<>();
     private static ArrayList<Square> blackCheckers = new ArrayList<>();
+    private static boolean gameOver = false;
+    private static Context context;
 
-    public static ArrayList<Index> getPositionsCheckerCanMoveTo() {
+    public static void setContext(Context context) {
+        CheckerBoard.context = context;
+    }
+
+    public static boolean isGameOver() {
+        return gameOver;
+    }
+
+    private static void setGameOver(boolean gameOver) {
+        CheckerBoard.gameOver = gameOver;
+    }
+
+    public static ArrayList<Index> setPositionsCheckerCanMoveTo() {
         findNeighboursOfChecker();
         findNeighboursCheckerCanEat();
         return positionsCheckerCanMoveTo;
@@ -114,9 +133,30 @@ public class CheckerBoard {
     }
 
     public static Square setAndGetActiveSquare(Square s) {
+        clearPreviousPositions();
         CheckerBoard.current = s;
-        getPositionsCheckerCanMoveTo();
+        setPositionsCheckerCanMoveTo();
+        for (Index index : positionsCheckerCanMoveTo) {
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setBackgroundResource(R.drawable.border);
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    moveCheckerOnCheckerBoard(checkersMatrix[index.getX()][index.getY()]);
+                }
+            });
+        }
+
         return CheckerBoard.current;
+    }
+
+    public static void clearPreviousPositions(){
+        for (Index index : positionsCheckerCanMoveTo) {
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setBackgroundColor(Color.rgb(178, 94, 60));
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setOnClickListener(null);
+        }
+        
+        enemyPositions.clear();
+        positionsCheckerCanMoveTo.clear();
     }
 
     public static Square getActiveSquare(){
@@ -203,7 +243,8 @@ public class CheckerBoard {
                 if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
                     Index index = new Index(x + offSet, y - 2);
                     positionsCheckerCanMoveTo.add(index);
-                    enemyPositions.put(checkersMatrix[x + offSet][y + 2], checkersMatrix[x + enemyOffset][y + 1]);
+                    enemyPositions.put(checkersMatrix[x + offSet][y - 2], checkersMatrix[x + enemyOffset][y - 1]);
+                    System.out.println(enemyPositions);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -223,26 +264,72 @@ public class CheckerBoard {
     }
 
     public static void moveCheckerOnCheckerBoard(Square target){
+        visualMovement(target);
         eat(target);
         Checker tempChecker = current.getChecker();
         current.setChecker(null);
         tempChecker.setIndex(target.getIndex().getX(), target.getIndex().getY());
         target.setChecker(tempChecker);
+        addToCorrectCheckersArr(target);
         kingCheckerIfNeeded(target);
         positionsCheckerCanMoveTo.clear();
         current = null;
+//        if (Player.isIsWhitePlayerTurn() && MainActivity.blackPlayer.hasMove() && MainActivity.blackPlayer.getNumberOfCheckersLeft()>0
+//        || !Player.isIsWhitePlayerTurn() && MainActivity.whitePlayer.hasMove() && MainActivity.whitePlayer.getNumberOfCheckersLeft()>0) {
+            Player.changeTurn();
+            MainActivity.setOnClickOfAllCheckers();
+//        }
+//        else {
+//            gameOver = true;
+//        }
+    }
+
+    public static void visualMovement(Square target){
+        LinearLayout visualSquare = current.getVisualSquare();
+        ImageView visualChecker = (ImageView) current.getVisualSquare().getChildAt(0);
+        visualSquare.removeAllViews();
+        if (visualChecker!=null)
+            target.getVisualSquare().addView(visualChecker);
+        visuallyRemovePositionsCheckerCanMoveTo();
+    }
+
+    public static void visuallyRemovePositionsCheckerCanMoveTo(){
+        for (Index index : positionsCheckerCanMoveTo) {
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setBackgroundColor(Color.rgb(178, 94, 60));
+            checkersMatrix[index.getX()][index.getY()].getVisualSquare().setOnClickListener(null);
+        }
     }
 
     private static void kingCheckerIfNeeded(Square target){
-        if (target.getChecker() instanceof CheckerWhite && target.getChecker().getxPlaceOnBoard() == checkersMatrix.length-1
-                || target.getChecker() instanceof CheckerBlack && target.getChecker().getxPlaceOnBoard() == 0){
+        if (target.getChecker() instanceof CheckerWhite && target.getChecker().getxPlaceOnBoard() == checkersMatrix.length-1){
             target.getChecker().turnToKing();
+            ImageView imageView = new ImageView(context);
+            imageView.setImageResource(R.mipmap.white_queen_foreground);
+            target.getVisualSquare().removeAllViews();
+            target.getVisualSquare().addView(imageView);
+        }
+        else if (target.getChecker() instanceof CheckerBlack && target.getChecker().getxPlaceOnBoard() == 0){
+            target.getChecker().turnToKing();
+            ImageView imageView = new ImageView(context);
+            imageView.setImageResource(R.mipmap.black_queen_foreground);
+            target.getVisualSquare().removeAllViews();
+            target.getVisualSquare().addView(imageView);
+        }
+    }
+
+    private static void addToCorrectCheckersArr(Square target){
+        if (target.getChecker() instanceof CheckerWhite){
+            whiteCheckers.add(target);
+        }
+        else if (target.getChecker() instanceof CheckerBlack){
+            blackCheckers.add(target);
         }
     }
 
     private static void eat(Square target){
         Square enemyPosition = enemyPositions.get(target);
         if (enemyPosition!=null) {
+            enemyPosition.getVisualSquare().removeAllViews();
             if (enemyPosition.getChecker() instanceof CheckerWhite)
                 whiteCheckers.remove(enemyPosition);
             else blackCheckers.remove(enemyPosition);
