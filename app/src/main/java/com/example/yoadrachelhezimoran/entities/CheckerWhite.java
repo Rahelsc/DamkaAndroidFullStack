@@ -3,7 +3,6 @@ package com.example.yoadrachelhezimoran.entities;
 import android.widget.ImageView;
 
 public class CheckerWhite extends Checker{
-
     private ImageView checkerImageView;
 
     public CheckerWhite(int xPlaceOnBoard, int yPlaceOnBoard) {

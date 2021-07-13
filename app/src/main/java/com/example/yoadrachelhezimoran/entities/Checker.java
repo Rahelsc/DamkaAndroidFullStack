@@ -69,7 +69,6 @@ public abstract class Checker {
                 isKing == checker.isKing;
     }
 
-
     public abstract ImageView getCheckerImageView();
     public abstract void setCheckerImageView(ImageView imageView);
 }

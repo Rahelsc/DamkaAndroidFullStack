@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         winAnnouncement.setVisibility(View.VISIBLE);
     }
 
-
-
     // fills the squares with the appropriate views
     public void setImages(){
         for (int i = 0; i < 8; i++) {
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // changes the text indicator of whose turn it is --> put in checker
+    // changes the text indicator of whose turn it is
     public static void changePlayer() {
         if (Player.isIsWhitePlayerTurn()) {
             whiteTurnText.setVisibility(View.VISIBLE);
@@ -141,8 +139,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void yieldGame(View view) {
         findViewById(R.id.askDefeat).setOnClickListener(null);
-        currentPlayer.giveUpNow();
-        currentPlayer = currentPlayer.nameOfPlayer().equals("White") ? blackPlayer : whitePlayer;
-        setOnClickOfAllCheckers();
+        // checks if game wasn't already over, if player lost before press concede
+        // don't announce losing again
+        if (!CheckerBoard.isGameOver()) {
+            currentPlayer.giveUpNow();
+            currentPlayer = currentPlayer.nameOfPlayer().equals("White") ? blackPlayer : whitePlayer;
+            setOnClickOfAllCheckers();
+        }
     }
 }

@@ -2,20 +2,11 @@ package com.example.yoadrachelhezimoran.entities;
 
 public class Player {
     public static boolean isWhitePlayerTurn = true;
-    private int wins;
     private typeOfPlayer type;
 
+
     public Player(typeOfPlayer type) {
-        this.wins = 0;
         this.type = type;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public void addWin(){
-        this.wins++;
     }
 
     public void giveUpNow() {

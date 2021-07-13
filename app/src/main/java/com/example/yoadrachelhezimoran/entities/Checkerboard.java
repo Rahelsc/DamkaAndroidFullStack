@@ -43,8 +43,8 @@ public class CheckerBoard {
 
     public static ArrayList<Index> setPositionsCheckerCanMoveTo() {
         if (current.getChecker() != null) {
-            findNeighboursOfChecker();
             findNeighboursCheckerCanEat();
+            findNeighboursOfChecker();
         }
         return positionsCheckerCanMoveTo;
     }
@@ -145,6 +145,19 @@ public class CheckerBoard {
         clearPreviousPositions();
         CheckerBoard.current = s;
         setPositionsCheckerCanMoveTo();
+        setOnClickMovement();
+        return CheckerBoard.current;
+    }
+
+    public static Square setAndGetActiveSquare(Square s, boolean haventEaten) {
+        clearPreviousPositions();
+        CheckerBoard.current = s;
+        findNeighboursCheckerCanEat();
+        setOnClickMovement();
+        return CheckerBoard.current;
+    }
+
+    private static void setOnClickMovement(){
         for (Index index : positionsCheckerCanMoveTo) {
             checkersMatrix[index.getX()][index.getY()].getVisualSquare().setBackgroundResource(R.drawable.border);
             checkersMatrix[index.getX()][index.getY()].getVisualSquare().setOnClickListener(new View.OnClickListener() {
@@ -154,8 +167,6 @@ public class CheckerBoard {
                 }
             });
         }
-
-        return CheckerBoard.current;
     }
 
     public static void clearPreviousPositions(){
@@ -319,7 +330,8 @@ public class CheckerBoard {
             clearPreviousPositions();
 
             // we find the next target we can move to from current position
-            setAndGetActiveSquare(target);
+            // calling a different `setAndGetActiveSquare` that only checks for neighbours you can eat
+            setAndGetActiveSquare(target, haventEaten);
         }
 
         System.out.println("black size: "+blackCheckers.size());
@@ -400,8 +412,3 @@ public class CheckerBoard {
         return checkers;
     }
 }
-
-/*
-* ולבדוק תיקו?
-*
-* */
