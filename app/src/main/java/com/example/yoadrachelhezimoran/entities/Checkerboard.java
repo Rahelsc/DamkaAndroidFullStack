@@ -12,6 +12,7 @@ import com.example.yoadrachelhezimoran.Client;
 import com.example.yoadrachelhezimoran.MainActivity;
 import com.example.yoadrachelhezimoran.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,7 +195,11 @@ public class CheckerBoard {
             checkersMatrix[index.getX()][index.getY()].getVisualSquare().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    moveCheckerOnCheckerBoard(checkersMatrix[index.getX()][index.getY()]);
+                    try {
+                        moveCheckerOnCheckerBoard(checkersMatrix[index.getX()][index.getY()]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -251,26 +256,6 @@ public class CheckerBoard {
         }catch (ExecutionException | InterruptedException e){
             e.printStackTrace();
         }
-
-        Log.d("shimri1", "11111111111111111111");
-
-
-//        Checker extracted = null;
-//        try {
-//            extracted = checkersMatrix[x + offSet][y - 1].getChecker();
-//            if (extracted == null) {
-//                positionsCheckerCanMoveTo.add(new Index(x + offSet, y - 1));
-//            }
-//        } catch (ArrayIndexOutOfBoundsException ignored) {
-//        }
-//
-//
-//        try {
-//            extracted = checkersMatrix[x + offSet][y + 1].getChecker();
-//            if (extracted == null)
-//                positionsCheckerCanMoveTo.add(new Index(x + offSet, y + 1));
-//        } catch (ArrayIndexOutOfBoundsException ignored) {
-//        }
     }
 
     public static void findNeighboursCheckerCanEat(){
@@ -326,37 +311,9 @@ public class CheckerBoard {
         }catch (ExecutionException | InterruptedException e){
             e.printStackTrace();
         }
-
-
-//        Checker potentialEnemy = null;
-//        // only if target position is null, there is a reason to check if there is anyone to eat
-//        try {
-//            if (checkersMatrix[x + offSet] [y - 2].getChecker() == null) {
-//                potentialEnemy = checkersMatrix[x + enemyOffset][y - 1].getChecker();
-//                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
-//                    Index index = new Index(x + offSet, y - 2);
-//                    positionsCheckerCanMoveTo.add(index);
-//                    enemyPositions.put(checkersMatrix[x + offSet][y - 2], checkersMatrix[x + enemyOffset][y - 1]);
-//                    System.out.println(enemyPositions);
-//                }
-//            }
-//        } catch (ArrayIndexOutOfBoundsException ignored) {
-//        }
-//
-//        try {
-//            if (checkersMatrix[x + offSet] [y + 2].getChecker() == null) {
-//                potentialEnemy = checkersMatrix[x + enemyOffset][y + 1].getChecker();
-//                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
-//                    Index index = new Index(x + offSet, y + 2);
-//                    positionsCheckerCanMoveTo.add(index);
-//                    enemyPositions.put(checkersMatrix[x + offSet][y + 2], checkersMatrix[x + enemyOffset][y + 1]);
-//                }
-//            }
-//        } catch (ArrayIndexOutOfBoundsException ignored) {
-//        }
     }
 
-    public static void moveCheckerOnCheckerBoard(Square target){
+    public static void moveCheckerOnCheckerBoard(Square target) throws IOException {
         visualMovement(target);
         eat(target);
         Checker tempChecker = current.getChecker();

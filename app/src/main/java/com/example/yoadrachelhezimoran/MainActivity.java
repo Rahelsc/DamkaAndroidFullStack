@@ -14,6 +14,8 @@ import com.example.yoadrachelhezimoran.entities.Player;
 import com.example.yoadrachelhezimoran.entities.Square;
 import com.example.yoadrachelhezimoran.entities.typeOfPlayer;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final Player blackPlayer = new Player(typeOfPlayer.BLACK);
@@ -35,7 +37,11 @@ public class MainActivity extends AppCompatActivity {
         visualCheckersBoard = findViewById(R.id.VisualCheckerBoard);
         CheckerBoard.setContext(MainActivity.this);
         setImages();
-        setOnClickOfAllCheckers();
+        try {
+            setOnClickOfAllCheckers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // this is win - we need to handle tie
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // add event listener to game pieces of active player
-    public static void setOnClickOfAllCheckers(){
+    public static void setOnClickOfAllCheckers() throws IOException {
         Log.d("hezi", "setOnClickOfAllCheckers: \n" + CheckerBoard.getInstance());
 
         // removes event listeners from all pieces on the board
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     // linked to the `concede defeat` button
     // stops the game
-    public void yieldGame(View view) {
+    public void yieldGame(View view) throws IOException {
 
         findViewById(R.id.askDefeat).setOnClickListener(null);
         // checks if game wasn't already over, if player lost before press concede
