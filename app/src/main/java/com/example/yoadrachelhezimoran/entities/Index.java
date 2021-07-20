@@ -1,6 +1,8 @@
 package com.example.yoadrachelhezimoran.entities;
 
-public class Index {
+import java.io.Serializable;
+
+public class Index implements Serializable {
     private int x;
     private int y;
 

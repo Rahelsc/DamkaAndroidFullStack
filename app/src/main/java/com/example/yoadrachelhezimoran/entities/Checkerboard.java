@@ -7,11 +7,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.yoadrachelhezimoran.Action;
+import com.example.yoadrachelhezimoran.Client;
 import com.example.yoadrachelhezimoran.MainActivity;
 import com.example.yoadrachelhezimoran.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CheckerBoard {
     // static variable checkerboard of type CheckerBoard
@@ -24,6 +32,29 @@ public class CheckerBoard {
     private static ArrayList<Square> blackCheckers = new ArrayList<>();
     private static boolean gameOver = false;
     private static Context context;
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(3);
+
+
+    public static int[][] getPositions(){
+        int[][] positions = new int[8][];
+        for (int i = 0; i < positions.length; i++) {
+            positions[i] = new int[8];
+        }
+
+        for (Square whiteChecker : whiteCheckers) {
+            int posX = whiteChecker.getIndex().getX();
+            int posY = whiteChecker.getIndex().getY();
+            positions[posX][posY] = 1; // 1 represents the white checkers
+        }
+
+        for (Square blackChecker : blackCheckers) {
+            int posX = blackChecker.getIndex().getX();
+            int posY = blackChecker.getIndex().getY();
+            positions[posX][posY] = 2; // 2 represents the black checkers
+        }
+
+        return positions;
+    }
 
     public static Context getContext() {
         return context;
@@ -190,13 +221,11 @@ public class CheckerBoard {
     }
 
     public static void findNeighboursOfChecker(){
-        int x = current.getChecker().getXPlaceOnBoard();
-        int y = current.getChecker().getYPlaceOnBoard();
-        System.out.println("returnNeighboursOfChecker: " + x + ", " + y);
+        Checker currentChecker = current.getChecker();
         int offSet = 0;
-        if (checkersMatrix[x][y].getChecker() instanceof CheckerWhite)
+        if (currentChecker instanceof CheckerWhite)
             offSet = 1;
-        else if (checkersMatrix[x][y].getChecker() instanceof CheckerBlack)
+        else if (currentChecker instanceof CheckerBlack)
             offSet = -1;
         getMoves(offSet);
         if (current.getChecker().isKing()){
@@ -209,30 +238,48 @@ public class CheckerBoard {
         int y = current.getChecker().getYPlaceOnBoard();
         if (offSet == 0) return; // if there is no checker in given position return.
 
-        Checker extracted = null;
-        try {
-            extracted = checkersMatrix[x + offSet][y - 1].getChecker();
-            if (extracted == null) {
-                positionsCheckerCanMoveTo.add(new Index(x + offSet, y - 1));
+        Client.setAction(Action.getNeighbors);
+        Client.setIndex(new int[]{x,y});
+        Client.setOffSet(offSet);
+        Future<List<int[]>> futureResult = threadPool.submit(Client.runClient);
+
+        try{
+            List<int[]> res = futureResult.get();
+            for (int[] adjacentIndex : res) {
+                positionsCheckerCanMoveTo.add(new Index(adjacentIndex[0], adjacentIndex[1]));
             }
-        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }catch (ExecutionException | InterruptedException e){
+            e.printStackTrace();
         }
 
+        Log.d("shimri1", "11111111111111111111");
 
-        try {
-            extracted = checkersMatrix[x + offSet][y + 1].getChecker();
-            if (extracted == null)
-                positionsCheckerCanMoveTo.add(new Index(x + offSet, y + 1));
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
+
+//        Checker extracted = null;
+//        try {
+//            extracted = checkersMatrix[x + offSet][y - 1].getChecker();
+//            if (extracted == null) {
+//                positionsCheckerCanMoveTo.add(new Index(x + offSet, y - 1));
+//            }
+//        } catch (ArrayIndexOutOfBoundsException ignored) {
+//        }
+//
+//
+//        try {
+//            extracted = checkersMatrix[x + offSet][y + 1].getChecker();
+//            if (extracted == null)
+//                positionsCheckerCanMoveTo.add(new Index(x + offSet, y + 1));
+//        } catch (ArrayIndexOutOfBoundsException ignored) {
+//        }
     }
 
     public static void findNeighboursCheckerCanEat(){
-        int x = current.getChecker().getXPlaceOnBoard();
-        int y = current.getChecker().getYPlaceOnBoard();
+
+        Checker currentChecker = current.getChecker();
+
         int offSet = 0;
         int enemyOffset = 0;
-        Checker currentChecker = checkersMatrix[x][y].getChecker();
+
         if (currentChecker instanceof CheckerWhite){
             offSet = 2;
             enemyOffset = 1;
@@ -255,32 +302,58 @@ public class CheckerBoard {
 
         if (offSet == 0) return; // if there is no checker in given position return.
 
-        Checker potentialEnemy = null;
-        // only if target position is null, there is a reason to check if there is anyone to eat
-        try {
-            if (checkersMatrix[x + offSet] [y - 2].getChecker() == null) {
-                potentialEnemy = checkersMatrix[x + enemyOffset][y - 1].getChecker();
-                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
-                    Index index = new Index(x + offSet, y - 2);
-                    positionsCheckerCanMoveTo.add(index);
-                    enemyPositions.put(checkersMatrix[x + offSet][y - 2], checkersMatrix[x + enemyOffset][y - 1]);
-                    System.out.println(enemyPositions);
+        Client.setAction(Action.getNeighborsToEat);
+        Client.setIndex(new int[]{x,y});
+        Client.setOffSet(offSet);
+        Client.setEnemyOffSet(enemyOffset);
+
+        Future<List<int[]>> futureResult = threadPool.submit(Client.findEatingMoves);
+
+        try{
+            List<int[]> res = futureResult.get();
+            for (int[] adjacentIndex : res) {
+                positionsCheckerCanMoveTo.add(new Index(adjacentIndex[0], adjacentIndex[1]));
+                Client.setAction(Action.getPossibleEnemiesPosition);
+                Client.setNewPosition(adjacentIndex[0]*10+adjacentIndex[1]);
+                Future<int[]> futureEnemy = threadPool.submit(Client.findWhoIAte);
+                try {
+                    int[] enemyRes = futureEnemy.get();
+                    enemyPositions.put(checkersMatrix[adjacentIndex[0]][adjacentIndex[1]], checkersMatrix[enemyRes[0]][enemyRes[1]]);
+                }catch (ExecutionException e){
+                    e.printStackTrace();
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }catch (ExecutionException | InterruptedException e){
+            e.printStackTrace();
         }
 
-        try {
-            if (checkersMatrix[x + offSet] [y + 2].getChecker() == null) {
-                potentialEnemy = checkersMatrix[x + enemyOffset][y + 1].getChecker();
-                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
-                    Index index = new Index(x + offSet, y + 2);
-                    positionsCheckerCanMoveTo.add(index);
-                    enemyPositions.put(checkersMatrix[x + offSet][y + 2], checkersMatrix[x + enemyOffset][y + 1]);
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
+
+//        Checker potentialEnemy = null;
+//        // only if target position is null, there is a reason to check if there is anyone to eat
+//        try {
+//            if (checkersMatrix[x + offSet] [y - 2].getChecker() == null) {
+//                potentialEnemy = checkersMatrix[x + enemyOffset][y - 1].getChecker();
+//                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
+//                    Index index = new Index(x + offSet, y - 2);
+//                    positionsCheckerCanMoveTo.add(index);
+//                    enemyPositions.put(checkersMatrix[x + offSet][y - 2], checkersMatrix[x + enemyOffset][y - 1]);
+//                    System.out.println(enemyPositions);
+//                }
+//            }
+//        } catch (ArrayIndexOutOfBoundsException ignored) {
+//        }
+//
+//        try {
+//            if (checkersMatrix[x + offSet] [y + 2].getChecker() == null) {
+//                potentialEnemy = checkersMatrix[x + enemyOffset][y + 1].getChecker();
+//                if (potentialEnemy != null && potentialEnemy.getClass() != currentChecker.getClass()){
+//                    Index index = new Index(x + offSet, y + 2);
+//                    positionsCheckerCanMoveTo.add(index);
+//                    enemyPositions.put(checkersMatrix[x + offSet][y + 2], checkersMatrix[x + enemyOffset][y + 1]);
+//                }
+//            }
+//        } catch (ArrayIndexOutOfBoundsException ignored) {
+//        }
     }
 
     public static void moveCheckerOnCheckerBoard(Square target){
@@ -302,8 +375,10 @@ public class CheckerBoard {
             haventEaten = false;
         }
 
-        if (Player.isIsWhitePlayerTurn() && (!checkerboard.canBlackPlayerMove() || MainActivity.blackPlayer.getNumberOfCheckersLeft()==0)
-        || !Player.isIsWhitePlayerTurn() && (!checkerboard.canWhitePlayerMove() || MainActivity.whitePlayer.getNumberOfCheckersLeft()==0)) {
+        if (Player.isIsWhitePlayerTurn() &&
+                (!checkerboard.canBlackPlayerMove() || MainActivity.blackPlayer.getNumberOfCheckersLeft()==0)
+        || !Player.isIsWhitePlayerTurn() &&
+                (!checkerboard.canWhitePlayerMove() || MainActivity.whitePlayer.getNumberOfCheckersLeft()==0)) {
             gameOver = true;
         }
 
@@ -357,14 +432,16 @@ public class CheckerBoard {
     }
 
     private static void kingCheckerIfNeeded(Square target){
-        if (target.getChecker() instanceof CheckerWhite && target.getChecker().getxPlaceOnBoard() == checkersMatrix.length-1){
+        if (target.getChecker() instanceof CheckerWhite &&
+                target.getChecker().getxPlaceOnBoard() == checkersMatrix.length-1){
             target.getChecker().turnToKing();
             ImageView imageView = new ImageView(context);
             imageView.setImageResource(R.mipmap.white_queen_foreground);
             target.getVisualSquare().removeAllViews();
             target.getVisualSquare().addView(imageView);
         }
-        else if (target.getChecker() instanceof CheckerBlack && target.getChecker().getxPlaceOnBoard() == 0){
+        else if (target.getChecker() instanceof CheckerBlack &&
+                target.getChecker().getxPlaceOnBoard() == 0){
             target.getChecker().turnToKing();
             ImageView imageView = new ImageView(context);
             imageView.setImageResource(R.mipmap.black_queen_foreground);

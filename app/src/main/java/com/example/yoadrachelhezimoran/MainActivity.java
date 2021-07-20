@@ -2,30 +2,17 @@ package com.example.yoadrachelhezimoran;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.yoadrachelhezimoran.entities.CheckerBoard;
 import com.example.yoadrachelhezimoran.entities.Player;
 import com.example.yoadrachelhezimoran.entities.Square;
 import com.example.yoadrachelhezimoran.entities.typeOfPlayer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,24 +31,15 @@ public class MainActivity extends AppCompatActivity {
         whiteTurnText = findViewById(R.id.turnWhiteText);
         blackTurnText = findViewById(R.id.turnBlackText);
         winAnnouncement = findViewById(R.id.PlayerWins);
-        CheckerBoard c= CheckerBoard.getInstance();
+        CheckerBoard c = CheckerBoard.getInstance();
         visualCheckersBoard = findViewById(R.id.VisualCheckerBoard);
         CheckerBoard.setContext(MainActivity.this);
         setImages();
         setOnClickOfAllCheckers();
-
     }
 
     // this is win - we need to handle tie
     public static void endOfGameAnnouncement(){
-        for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
-            blackChecker.getVisualSquare().setOnClickListener(null);
-        }
-
-        for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
-            whiteChecker.getVisualSquare().setOnClickListener(null);
-        }
-
         String tempAnnouncement = currentPlayer.nameOfPlayer() + " " + winAnnouncement.getText().toString();
         winAnnouncement.setText(tempAnnouncement);
         winAnnouncement.setVisibility(View.VISIBLE);
@@ -80,15 +58,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // add event listener to player that is active
+    // add event listener to game pieces of active player
     public static void setOnClickOfAllCheckers(){
-
-        if (CheckerBoard.isGameOver()) {
-            endOfGameAnnouncement();
-            return;
-        }
         Log.d("hezi", "setOnClickOfAllCheckers: \n" + CheckerBoard.getInstance());
 
+        // removes event listeners from all pieces on the board
         for (Square whiteChecker : CheckerBoard.getWhiteCheckers()) {
             whiteChecker.getVisualSquare().setOnClickListener(null);
         }
@@ -96,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         for (Square blackChecker : CheckerBoard.getBlackCheckers()) {
             blackChecker.getVisualSquare().setOnClickListener(null);
         }
+
+        // if game is over, don't continue with flow of function
+        if (CheckerBoard.isGameOver()) {
+            endOfGameAnnouncement();
+            return;
+        }
+
         changePlayer();
         if (Player.isIsWhitePlayerTurn()) {
 
@@ -136,14 +117,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    // linked to the `concede defeat` button
+    // stops the game
     public void yieldGame(View view) {
+
         findViewById(R.id.askDefeat).setOnClickListener(null);
         // checks if game wasn't already over, if player lost before press concede
         // don't announce losing again
         if (!CheckerBoard.isGameOver()) {
-            currentPlayer.giveUpNow();
+            currentPlayer.giveUpNow(); // sets game to over
+            // switch the player that's currently playing with the other player, since player conceded defeat
+            // is important for game announcement
             currentPlayer = currentPlayer.nameOfPlayer().equals("White") ? blackPlayer : whitePlayer;
+            // checks game is over
             setOnClickOfAllCheckers();
         }
     }
