@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356772770504",
+    "project_id": "yoadrachelhezimoran",
+    "storage_bucket": "yoadrachelhezimoran.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356772770504:android:7cb656a20ac4de74dfebfd",
+        "android_client_info": {
+          "package_name": "com.example.yoadrachelhezi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356772770504-fadc0vembjqk747f5gi3i2g14pa4rn8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDv-TvN121Q_0HDu5KEhG6NfBU5DOag5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356772770504-fadc0vembjqk747f5gi3i2g14pa4rn8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ package com.example.yoadrachelhezimoran;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.example.yoadrachelhezimoran.entities.CheckerBoard;
 import com.example.yoadrachelhezimoran.entities.Player;
 import com.example.yoadrachelhezimoran.entities.Square;
 import com.example.yoadrachelhezimoran.entities.typeOfPlayer;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static TextView winAnnouncement;
     private static Player currentPlayer = whitePlayer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +40,8 @@ public class MainActivity extends AppCompatActivity {
         visualCheckersBoard = findViewById(R.id.VisualCheckerBoard);
         CheckerBoard.setContext(MainActivity.this);
         setImages();
-        try {
-            setOnClickOfAllCheckers();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setOnClickOfAllCheckers();
+
     }
 
     // this is win - we need to handle tie
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // add event listener to game pieces of active player
-    public static void setOnClickOfAllCheckers() throws IOException {
+    public static void setOnClickOfAllCheckers() {
         Log.d("hezi", "setOnClickOfAllCheckers: \n" + CheckerBoard.getInstance());
 
         // removes event listeners from all pieces on the board
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     // linked to the `concede defeat` button
     // stops the game
-    public void yieldGame(View view) throws IOException {
+    public void yieldGame(View view) {
 
         findViewById(R.id.askDefeat).setOnClickListener(null);
         // checks if game wasn't already over, if player lost before press concede
